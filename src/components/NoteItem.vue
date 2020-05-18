@@ -9,11 +9,11 @@
 * @version （指定发布版本）
 **/
 <template>
-    <div class="memo-container">
+    <div class="note-container">
         <Card>
                 <div slot="title">
-                    <Tooltip :content="memo.title" placement="top" theme="light" :disabled="memo.title.length < 13">
-                        <span class="title">{{memo.title}}</span>
+                    <Tooltip :content="note.title" placement="top" theme="light" :disabled="note.title.length < 13">
+                        <span class="title">{{note.title}}</span>
                     </Tooltip>
                 </div>
             <div slot="extra">
@@ -21,10 +21,10 @@
                 <Icon type="ios-trash" @click="doDel"/>
             </div>
             <div class="time">
-                <span>{{memo.createTime}}</span>
-                <span>分类：{{$store.state.aHelper.getCategoryName(memo.categoryId)}}</span>
+                <span>{{note.createTime}}</span>
+                <span>分类：{{$store.state.aHelper.getCategoryName(note.categoryId)}}</span>
             </div>
-            <div class="content">{{memo.content}}</div>
+            <div class="content">{{note.content}}</div>
         </Card>
     </div>
 </template>
@@ -33,8 +33,8 @@
     import ItemData from "@/model/ItemData";
 
     @Component
-    export default class MemoItem extends Vue {
-        @Prop() memo!: ItemData;
+    export default class NoteItem extends Vue {
+        @Prop() note!: ItemData;
 
         // 删除方法
         doDel(): void {
@@ -42,7 +42,7 @@
                 title: '删除确认',
                 content: '<p>确认删除本条信息？</p>',
                 onOk: () => {
-                    this.$store.state.aHelper.remove(this.memo.id);
+                    this.$store.state.aHelper.remove(this.note.id);
                     this.$Message.success('删除成功！');
                 },
                 onCancel: () => {
@@ -54,14 +54,14 @@
         // 编辑
         showEdit(): void {
             this.$store.state.isShow = true;
-            const newMemo = JSON.parse(JSON.stringify(this.memo));
-            this.$store.commit("transMemo", newMemo);
+            const newNote = JSON.parse(JSON.stringify(this.note));
+            this.$store.commit("transNote", newNote);
         }
     }
 </script>
 
 <style scoped lang="less">
-    .memo-container {
+    .note-container {
         display: inline-block;
 
         padding: 20px;

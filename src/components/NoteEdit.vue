@@ -12,13 +12,13 @@
     <!-- 便签新增/编辑区 -->
     <Modal v-model="$store.state.isShow" width="460" :closable="false">
         <p slot="header">
-            <Input v-model="memo.title" placeholder="标题"/>
-            <Select v-model="memo.categoryId">
+            <Input v-model="note.title" placeholder="标题"/>
+            <Select v-model="note.categoryId">
                 <Option v-for="item in categoryList" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
         </p>
         <div style="text-align:center">
-            <Input v-model="memo.content" type="textarea" :autosize="{minRows: 8,maxRows: 12}" placeholder="内容"/>
+            <Input v-model="note.content" type="textarea" :autosize="{minRows: 8,maxRows: 12}" placeholder="内容"/>
         </div>
         <div slot="footer">
             <Button size="small" @click="closePop">取消</Button>
@@ -31,8 +31,8 @@
     import ItemData from "@/model/ItemData";
 
     @Component
-    export default class MemoEdit extends Vue {
-        memo!: ItemData;
+    export default class NoteEdit extends Vue {
+        note!: ItemData;
         categoryList: Array<any> = [{id: 0, name: '工作'}, {id: 1, name: '生活'}, {id: 2, name: '学习'}]
 
         constructor() {
@@ -41,7 +41,7 @@
 
         @Watch('$store.state.isShow', {immediate: true, deep: true})
         isShowChanged(n: boolean, o: boolean) {
-            this.memo = this.$store.state.transMemo;
+            this.note = this.$store.state.transNote;
         }
 
         created(): void {
@@ -50,16 +50,16 @@
 
         // 保存新文章对象
         save() {
-            // 验证 memo 是否 填写
-            if (this.memo && this.memo.categoryId > -1 && this.memo.title.trim().length > 0 && this.memo.content.trim().length > 0) {
+            // 验证 note 是否 填写
+            if (this.note && this.note.categoryId > -1 && this.note.title.trim().length > 0 && this.note.content.trim().length > 0) {
                 // 操作业务判断 id < 0 新增  否则 编辑
-                if (this.memo.id < 0) {
+                if (this.note.id < 0) {
                     // 新建
-                    this.$store.state.aHelper.add(this.memo);
+                    this.$store.state.aHelper.add(this.note);
                     this.$Message.success('新建保存成功！')
                 } else {
                     // 修改
-                    this.$store.state.aHelper.edit(this.memo);
+                    this.$store.state.aHelper.edit(this.note);
                     this.$Message.success('编辑保存成功！')
                 }
                 this.$store.state.isShow = false;

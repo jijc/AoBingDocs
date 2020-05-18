@@ -61,7 +61,7 @@
         }
 
         showAdd() {
-            this.$store.state.transMemo = new ItemData(-1, 0);
+            this.$store.state.transNote = new ItemData(-1, 0);
             this.$store.state.isShow = true;
         }
 
@@ -74,9 +74,9 @@
         doFilter(name: string): number {
             const n = Number(name.split('|')[1]);
             if (n === -1) {
-                return this.$store.state.aHelper.memoList.length;
+                return this.$store.state.aHelper.noteList.length;
             } else {
-                return this.$store.state.aHelper.memoList.filter((obj: any) => {
+                return this.$store.state.aHelper.noteList.filter((obj: any) => {
                     return obj.categoryId === n;
                 }).length;
             }

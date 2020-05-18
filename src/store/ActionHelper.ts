@@ -14,13 +14,13 @@ import Category from "@/model/CateEnums"
 
 class ActionHelper {
     // 1.负责数据处理 ----------------------------------------
-    dataHelper: DataHelper = new DataHelper('memoData', 'id');
+    dataHelper: DataHelper = new DataHelper('noteData', 'id');
     // 1.1 临时笔记数组 (! 允许为空)
-    memoList!: Array<ItemData>
+    noteList!: Array<ItemData>
 
     constructor() {
-        // 读取本地数据，将笔记数组保存到 this.memoList 变量中
-        this.memoList = this.readData();
+        // 读取本地数据，将笔记数组保存到 this.noteList 变量中
+        this.noteList = this.readData();
     }
 
     readData(): Array<ItemData> {
@@ -51,9 +51,9 @@ class ActionHelper {
         // a. 保存到本地 dataHelper.addData, 会返回生成的 ID
         item.id = this.dataHelper.addData(item);
         // b. 将笔记添加 到 笔记数组中
-        this.memoList.push(item);
+        this.noteList.push(item);
         // c. 将笔记数组重新保存到本地
-        this.dataHelper.saveDate(this.memoList);
+        this.dataHelper.saveDate(this.noteList);
         // d. 返回新笔记的 ID
         return item.id;
     }
@@ -61,7 +61,7 @@ class ActionHelper {
     // 2.2 修改笔记
     edit(item: ItemData): void {
         // a. 找出数组中 ID 相同的对象
-        const editItem: ItemData | undefined = this.memoList.find((obj) => {
+        const editItem: ItemData | undefined = this.noteList.find((obj) => {
             return item.id === obj.id;
         });
         // b. 修改对象的值，将参数 item 覆盖原有的对象的虽有属性
@@ -70,21 +70,21 @@ class ActionHelper {
             editItem.categoryId = item.categoryId;
             editItem.content = item.content;
             // c. 将更新后的数组从新保存到本地
-            this.dataHelper.saveDate(this.memoList);
+            this.dataHelper.saveDate(this.noteList);
         }
     }
 
     // 2.2 删除笔记
     remove(id: number): void {
         // a. 根据 ID 找出要删除的 下标
-        const index = this.memoList.findIndex((obj) => {
+        const index = this.noteList.findIndex((obj) => {
             return id === obj.id
         })
         // b. 根据下标 删除对象
         if (index > -1) {
-            this.memoList.splice(index, 1);
+            this.noteList.splice(index, 1);
             // c. 将删除对象后的 数组，从新保存到 localStorage
-            this.dataHelper.saveDate(this.memoList);
+            this.dataHelper.saveDate(this.noteList);
         }
     }
 }

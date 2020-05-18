@@ -2,7 +2,7 @@
     <div class="home">
         <MenuBar></MenuBar>
         <ItemList></ItemList>
-        <MemoEdit></MemoEdit>
+        <NoteEdit></NoteEdit>
     </div>
 </template>
 
@@ -10,15 +10,15 @@
     import {Component, Vue} from 'vue-property-decorator'
     import MenuBar from '@/components/MenuBar.vue'
     import ItemList from "@/components/ItemList.vue";
-    import MemoItem from "@/components/MemoItem.vue";
-    import MemoEdit from "@/components/MemoEdit.vue";
+    import NoteItem from "@/components/NoteItem.vue";
+    import NoteEdit from "@/components/NoteEdit.vue";
 
     @Component({
         components: {
             MenuBar,
             ItemList,
-            MemoItem,
-            MemoEdit
+            NoteItem,
+            NoteEdit
         },
     })
     export default class Home extends Vue {
